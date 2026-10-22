@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 
 public class RobotContainer {
@@ -40,6 +40,11 @@ public class RobotContainer {
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
     private final SwerveRequest.RobotCentric forwardStraight = new SwerveRequest.RobotCentric()
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+    
+    private static PIDController RotatePID = new PIDController(0.0f, 0.0f, 0.0f);
+    private static PIDController xPID      = new PIDController(0.0f, 0.0f, 0.0f);
+    private static PIDController yPID      = new PIDController(0.0f, 0.0f, 0.0f);
+
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
@@ -131,8 +136,10 @@ public class RobotContainer {
     // Don't forget to document your code!!!
     // do not be fear of the error!! YOU will be fixing it!
     public SwerveRequest.FieldCentric PidRequest(Pose2d target) {
-      System.out.print("Hello World!");
-      
+
+      return drive.withVelocityX(xPID.calculate(drivetrain.getState().Pose.getX(), target.getX()))
+                  .withVelocityY(yPID.calculate(drivetrain.getState().Pose.getY(), target.getY()))
+                  .withRotationalRate(RotatePID.calculate(drivetrain.getState().Pose.getRotation().getDegrees(), target.getRotation().getDegrees()));
     }
 }
 
