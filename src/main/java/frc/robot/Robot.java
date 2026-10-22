@@ -91,16 +91,17 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-      if(RobotContainer.joystick.b()) {
-        RobotContainer.targetPose = Pose2d(2, 2, Rotation2d.kZero);
+
+      if(RobotContainer.joystick.b().getAsBoolean()) {
+        RobotContainer.targetPose = new Pose2d(2, 2, Rotation2d.kZero);
       }
 
-      if(RobotContainer.joystick.x()) {
-        RobotContainer.targetPose = Pose2d(-1, 1, Rotation2d.kCCW_Pi_2);
+      if(RobotContainer.joystick.x().getAsBoolean()) {
+        RobotContainer.targetPose = new Pose2d(-1, 1, Rotation2d.kCCW_Pi_2);
       }
 
-      if(RobotContainer.joystick.y()) {
-        RobotContainer.targetPose = Pose2d(1, -2, Rotation2d.kCW_Pi_2);
+      if(RobotContainer.joystick.y().getAsBoolean()) {
+        RobotContainer.targetPose = new Pose2d(1, -2, Rotation2d.kCW_Pi_2);
       }
     }
 
