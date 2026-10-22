@@ -11,6 +11,11 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import java.lang.Math;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
@@ -85,7 +90,19 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+      if(RobotContainer.joystick.b()) {
+        RobotContainer.targetPose = Pose2d(2, 2, Rotation2d.kZero);
+      }
+
+      if(RobotContainer.joystick.x()) {
+        RobotContainer.targetPose = Pose2d(-1, 1, Rotation2d.kCCW_Pi_2);
+      }
+
+      if(RobotContainer.joystick.y()) {
+        RobotContainer.targetPose = Pose2d(1, -2, Rotation2d.kCW_Pi_2);
+      }
+    }
 
     @Override
     public void teleopExit() {}
