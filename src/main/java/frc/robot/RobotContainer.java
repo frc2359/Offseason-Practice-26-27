@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
+import edu.wpi.first.math.geometry.Pose2d;
+
 public class RobotContainer {
     public static boolean moveToTarget = false;
 
@@ -43,12 +45,12 @@ public class RobotContainer {
 
     public static final CommandXboxController joystick = new CommandXboxController(0);
 
-    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    public static final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
 
-    public static Pose2d targetPose = drivetrain.getPose();
+    public static Pose2d targetPose = drivetrain.getState().Pose;
 
     public RobotContainer() {
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -106,12 +108,12 @@ public class RobotContainer {
     }
 
     public SwerveRequest.FieldCentric driveRequest() {
-      if(joystick.a()) {
+      if(joystick.a().getAsBoolean()) {
         if(moveToTarget) {
           moveToTarget = false;
         } else {
           moveToTarget = true;
-          targetPose = drivetrain.getPose();
+          targetPose = drivetrain.getState().Pose;
         }
       }
 
