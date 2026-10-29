@@ -108,7 +108,7 @@ public class RobotContainer {
     }
 
     public SwerveRequest.FieldCentric driveRequest() {
-      if(joystick.a().getAsBoolean()) {
+      if(joystick.a().onTrue().getAsBoolean()) {
         if(moveToTarget) {
           moveToTarget = false;
         } else {
