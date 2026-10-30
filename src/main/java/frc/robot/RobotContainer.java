@@ -122,7 +122,7 @@ public class RobotContainer {
       } else {
         return drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate); // Drive counterclockwise with negative X (left)
       }
     }
 
@@ -130,6 +130,8 @@ public class RobotContainer {
     // hint: you will need 3 separate PID controllers
     // Don't forget to document your code!!!
     public SwerveRequest.FieldCentric PidRequest(Pose2d target) {
-
+      return drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate);
     }
 }
