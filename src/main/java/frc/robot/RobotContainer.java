@@ -23,10 +23,13 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 
 public class RobotContainer {
+    public static PIDController xPID = new PIDController(0, 0, 0);
+    public static PIDController yPID = new PIDController(0, 0, 0);
+    public static PIDController rotationPID = new PIDController(0, 0, 0);
     public static boolean moveToTarget = false;
 
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -130,11 +133,10 @@ public class RobotContainer {
     // hint: you will need 3 separate PID controllers
     // Don't forget to document your code!!!
     public SwerveRequest.FieldCentric PidRequest(Pose2d target) {
-      // delete following lines before writting the method
-      // this was just to fix compile errors while working
-      // on swerve constants
-      return drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate);
+      Pose2d measurement = drivetrain.getState().Pose;
+
+       return drive.withVelocityX(xPID.calculate(measurement.getX(), target.getX())) // Drive forward with negative Y (forward)
+                    .withVelocityY(yPID.calculate(measurement.getY(),target.getY())) // Drive left with negative X (left)
+                    .withRotationalRate(rotationPID.calculate(measurement.getRotation().getRadians(), target.getRotation().getRadians())); // Drive counterclockwise with negative X (left)
     }
 }
