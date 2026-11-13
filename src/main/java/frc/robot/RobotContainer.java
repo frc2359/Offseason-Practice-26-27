@@ -27,9 +27,9 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 
 public class RobotContainer {
-    public static PIDController xPID = new PIDController(0, 0, 0);
-    public static PIDController yPID = new PIDController(0, 0, 0);
-    public static PIDController rotationPID = new PIDController(0, 0, 0);
+    public static PIDController xPID = new PIDController(1, 0, 0);
+    public static PIDController yPID = new PIDController(1, 0, 0);
+    public static PIDController rotationPID = new PIDController(1, 0, 0);
     public static boolean moveToTarget = false;
 
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
