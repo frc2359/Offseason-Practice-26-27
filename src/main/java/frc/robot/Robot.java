@@ -94,15 +94,14 @@ public class Robot extends TimedRobot {
 
       if(RobotContainer.joystick.b().getAsBoolean()) {
         RobotContainer.targetPose = new Pose2d(2, 2, Rotation2d.kZero);
-      }
-
-      if(RobotContainer.joystick.x().getAsBoolean()) {
+      } else if(RobotContainer.joystick.x().getAsBoolean()) {
         RobotContainer.targetPose = new Pose2d(-1, 1, Rotation2d.kCCW_Pi_2);
-      }
-
-      if(RobotContainer.joystick.y().getAsBoolean()) {
+      } else if(RobotContainer.joystick.y().getAsBoolean()) {
         RobotContainer.targetPose = new Pose2d(1, -2, Rotation2d.kCW_Pi_2);
+      } else if(RobotContainer.joystick.getRightTriggerAxis() > 0.5) {
+        RobotContainer.targetPose = new Pose2d(0, 0, Rotation2d.kZero);
       }
+        
     }
 
     @Override
