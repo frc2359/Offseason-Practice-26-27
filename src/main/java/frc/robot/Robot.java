@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 
 import java.lang.Math;
 
@@ -20,6 +21,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
+    Field2d m_field = new Field2d();
     
     private final RobotContainer m_robotContainer;
 
@@ -32,12 +34,18 @@ public class Robot extends TimedRobot {
 
     public Robot() {
         m_robotContainer = new RobotContainer();
+        SmartDashboard.putData("Field", m_field);
+        SmartDashboard.putBoolean("PID Control", RobotContainer.moveToTarget);
     }
 
     @Override
     public void robotPeriodic() {
         m_timeAndJoystickReplay.update();
         CommandScheduler.getInstance().run();
+
+        
+        m_field.setRobotPose(RobotContainer.drivetrain.getState().Pose);
+        SmartDashboard.putBoolean("PID Control", RobotContainer.moveToTarget);
 
         /*
          * This example of adding Limelight is very simple and may not be sufficient for on-field use.
